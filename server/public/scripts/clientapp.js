@@ -1,9 +1,11 @@
 $(document).ready(function () {
-
+  //Initial load of existing animals onto DOM
   getAnimals();
 
+  //Listen for new animal to be input into form
   $('#animalForm').on('submit', postAnimal);
 
+  //Retrieve existing animals from the database and append them to the DOM
   function getAnimals() {
     $.ajax({
       type: 'GET',
@@ -26,6 +28,7 @@ $(document).ready(function () {
     });
   }
 
+  //Post a new animal to the database from the input form
   function postAnimal(event) {
     event.preventDefault();
 

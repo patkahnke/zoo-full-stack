@@ -10,10 +10,10 @@ router.get('/', function (req, res) {
       res.sendStatus(500);
     }
 
-    client.query('SELECT * FROM animals', function (err, result) {
+    //Query the database to get, alphabetically, the animal types and quantities
+    client.query('SELECT * FROM animals',
+    function (err, result) {
       done();
-
-      console.log(result.rows);
 
       res.send(result.rows);
     });
@@ -24,23 +24,23 @@ router.post('/', function (req, res) {
   var animal = req.body;
 
   pg.connect(connectionString, function (err, client, done) {
-                    if (err) {
-                      res.sendStatus(500);
-                    }
+    if (err) {
+      res.sendStatus(500);
+    }
 
-                    client.query('INSERT INTO animals (animal_type, quantity) ' +
-                    'VALUES ($1, $2)', [animal.animal_type, randomNumber(1, 100)],
-                    function (err, result) {
-                      done();
+    client.query('INSERT INTO animals (animal_type, quantity) ' +
+    'VALUES ($1, $2)', [animal.animal_type, randomNumber(1, 100)],
+    function (err, result) {
+      done();
 
-                      if (err) {
-                        res.sendStatus(500);
-                        return;
-                      }
+      if (err) {
+        res.sendStatus(500);
+        return;
+      }
 
-                      res.sendStatus(201);
-                    });
-                  });
+      res.sendStatus(201);
+    });
+  });
 });
 
 module.exports = router;
